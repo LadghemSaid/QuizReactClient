@@ -1,7 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 import AddQuestion from './addQuestion.js';
-
+import axios from 'axios';
+import {HTTP_SERVER_PORT} from "./constants";
 
 class AddQuiz extends React.Component
 {
@@ -69,6 +70,7 @@ class AddQuiz extends React.Component
     //Fonction appelé a la soumission du formulaire verifie les champs
     submitForm(e){
         e.preventDefault();
+        return   this.sendQuizz();
         let errors = 0;
 
         if(this.state.quizzName === "undefined"){
@@ -187,12 +189,31 @@ class AddQuiz extends React.Component
 
     sendQuizz()
     {
+
+        let data = new FormData();
+        data.set("prenom", "Alfred");
+
+        let json =this.state;
+        console.log(json);
+       // let obj = JSON.parse(this.state);
+
+        axios({
+
+            method: 'post',
+            url: HTTP_SERVER_PORT+'addquiz',
+            data: this.state,
+
+        })
+            .then(function (reponse) {
+                //On traite la suite une fois la réponse obtenue
+                console.log(reponse);
+            })
+            .catch(function (erreur) {
+                //On traite ici les erreurs éventuellement survenues
+                console.log(erreur);
+            });
         // let path = `http://localhost:3000`;
         // history.push(path);
-        //console.log(e.target.elements.select);
-        console.log(this.state.questions);
-        console.log("Selected value is: ");
-        console.log("quiz name is: "+this.state.name);
     }
 
 
