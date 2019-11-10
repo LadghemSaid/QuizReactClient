@@ -16,7 +16,7 @@ class AddQuiz extends React.Component
                 {label : 'Politique', value : 'politique'},
                 {label : 'Histoire',value : 'histoire'},
                 {label : 'Enigme',value : 'enigme'}],
-            nbrQuestion: 3,
+            nbrQuestion: 2,
             question0: {
                     name:undefined,
                     answerText1:'undefined',
@@ -89,8 +89,16 @@ class AddQuiz extends React.Component
 
         let id = e.target.dataset.id;
         let val = e.target.value;
-        this.updateItem(id, {name: val});
+        let q1 = "question"+id;
+        this.setState(()  => ({
+            [q1] : {
+                ...this.state["question"+id],
+                name: val
 
+            }
+        }),function(){
+            console.log(this.state)
+        })
     }
 
 
@@ -247,30 +255,45 @@ class AddQuiz extends React.Component
     addQuestion(e)
     {
         e.preventDefault();
-        this.setState({
-            nbrQuestion : +1
-        })
-        let qid = "question"+ this.state.nbrQuestion;
-        this.setState({
+        this.setState(  {
+            nbrQuestion: this.state.nbrQuestion + 1
+        },function(){
+            //console.log(this.state.nbrQuestion);
+            let qid = "question"+ this.state.nbrQuestion;
+            this.setState({
+                [qid]: {
+                    name:undefined,
+                    answerCorrect1: false,
+                    answerCorrect2: false,
+                    answerCorrect3: false,
+                    answerCorrect4: false,
+                    answerText1:'undefined',
+                    answerText2:'undefined',
+                    answerText3:'undefined',
+                    answerText4:'undefined',
+                }},function(){
+                //console.log(this.state);
 
-        [qid]: {
-                name:undefined,
-                answerCorrect1: false,
-                answerCorrect2: false,
-                answerCorrect3: false,
-                answerCorrect4: false,
-                answerText1:'undefined',
-                answerText2:'undefined',
-                answerText3:'undefined',
-                answerText4:'undefined',
-        }});
-    this.renderQuestion(qid);
+            });
+
+    });
+        this.renderQuestion();
+  //
 
     }
-    renderQuestion(question){
+
+
+    renderQuestion(){
+        let questions = []
+        for (let [key] of Object.entries(this.state)) {
+            if(key.includes('question') ){
+            //console.log(`${key}`);
+              questions.push(this.state[key]);
+            }
+        }
         return(
             <AddQuestion
-                questions={[]}
+                questions={questions}
                 setQuestionName={this.setQuestionName}
                 setq1Value={this.setq1Value}
                 setq2Value={this.setq2Value}
@@ -282,7 +305,8 @@ class AddQuiz extends React.Component
                 setq4Correction={this.setq4Correction}
 
             />
-            )
+        )
+
 
     }
 
