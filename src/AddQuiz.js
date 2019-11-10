@@ -1,4 +1,7 @@
 import React from 'react';
+import Select from 'react-select';
+import AddQuestion from './addQuestion.js';
+
 
 class AddQuiz extends React.Component
 {
@@ -6,208 +9,281 @@ class AddQuiz extends React.Component
     {
         super(props);
         this.state= {
-            accounts: ['ala', 'mark', 'nngg', 'wweerr'],
-            value: 'grapefruit',
-            categoris: ['grapefruit','lime','coconut','mango'],
-            name: undefined,
-            questions:[],
-            question:{name:undefined,answer1:{text:undefined,correct:false},answer2:{text:undefined,correct:false},answer3:{text:undefined,correct:false},answer4:{text:undefined,correct:false}}
-        }
-        ;
+            quizzName: "Sans Titre",
+            DefaultSelectValue: "Culture",
+            categories: [
+                {label : 'Culture',value : 'culture'},
+                {label : 'Politique', value : 'politique'},
+                {label : 'Histoire',value : 'histoire'},
+                {label : 'Enigme',value : 'enigme'}],
+            nbrQuestion: 3,
+            question0: {
+                    name:undefined,
+                    answerText1:'undefined',
+                    answerText2:'undefined',
+                    answerText3:'undefined',
+                    answerText4:'undefined',
+                    answerCorrect1: false,
+                    answerCorrect2: false,
+                    answerCorrect3: false,
+                    answerCorrect4: false,
+                },
+            question1: {
+                    name:undefined,
+                    answerText1:'undefined',
+                    answerText2:'undefined',
+                    answerText3:'undefined',
+                    answerText4:'undefined',
+                    answerCorrect1: false,
+                    answerCorrect2: false,
+                    answerCorrect3: false,
+                    answerCorrect4: false,
+                },
+            question2: {
+                    name:undefined,
+                    answerText1:'undefined',
+                    answerText2:'undefined',
+                    answerText3:'undefined',
+                    answerText4:'undefined',
+                    answerCorrect1: false,
+                    answerCorrect2: false,
+                    answerCorrect3: false,
+                    answerCorrect4: false,
+                }
 
 
+
+        };
+        this.setQuestionName = this.setQuestionName.bind(this)
+        this.setq1Value = this.setq1Value.bind(this)
+        this.setq2Value = this.setq2Value.bind(this)
+        this.setq3Value = this.setq3Value.bind(this)
+        this.setq4Value = this.setq4Value.bind(this)
+
+        this.setq1Correction = this.setq1Correction.bind(this)
+        this.setq2Correction = this.setq2Correction.bind(this)
+        this.setq3Correction = this.setq3Correction.bind(this)
+        this.setq4Correction = this.setq4Correction.bind(this)
     }
-    renderItem(index, key) {
-        return (<div key={key}>{this.state.accounts[index]}</div>);
-    }
+
     routeChange(e) {
         e.preventDefault();
+
         // let path = `http://localhost:3000`;
         // history.push(path);
         //console.log(e.target.elements.select);
-        let j=-1;
-        for(let i=0;i<e.target.elements.length+1;i++)
-        {
-            //console.log(this.state.categoris[i])
-            if(this.state.value === this.state.categoris[i])
-            {
-                j=i;
-            }
-        }
-        let table = e.target.elements;
-        console.log(table[0].valueOf());
-        console.log("Selected value is: "+j);
+        console.log(this.state.questions);
+        console.log("Selected value is: ");
         console.log("quiz name is: "+this.state.name);
-        // console.log(e.target.elements);
-        // console.log(e.target.elements);
+    }
 
-    }
-    handleChange(event) {
-        //console.log(event.target.value);
-        this.setState({value: event.target.value});
-    }
-    updateInputValue(event)
+
+
+    setQuizzName(event)
     {
-        //console.log(event.target.value);
-        this.setState({name: event.target.value})
-        //console.log(event.target.value);
+        this.setState({quizzName: event.target.value})
     }
-    setNameValue(e)
+
+    setQuestionName(e)
     {
 
+        let id = e.target.dataset.id;
         let val = e.target.value;
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                name: val
-            }}));
-        console.log(this.state.question.name)
+        this.updateItem(id, {name: val});
+
     }
+
+
     setq1Value(e)
     {
 
+        let id = e.target.dataset.id;
         let val = e.target.value;
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                    answer1 :{
-                    ...prevState.question.answer1,
-                        text: val
-                }
-            }
-        }));
-        console.log(this.state.question.answer1.text);
+        let q1 = "question"+id;
+        this.setState(()  => ({
+            [q1] : {
+                ...this.state["question"+id],
+                answerText1: val
 
+            }
+        }),function(){
+            console.log(this.state)
+        })
     }
     setq2Value(e)
     {
+        let id = e.target.dataset.id;
         let val = e.target.value;
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                answer2 :{
-                    ...prevState.question.answer2,
-                    text: val
-                }
+        let q1 = "question"+id;
+        this.setState(()  => ({
+            [q1] : {
+                ...this.state["question"+id],
+                answerText2: val
+
             }
-        }));
-        console.log(this.state.question.answer2.text);
+        }),function(){
+            console.log(this.state)
+        })
     }
     setq3Value(e)
     {
+        let id = e.target.dataset.id;
         let val = e.target.value;
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                answer3 :{
-                    ...prevState.question.answer3,
-                    text: val
-                }
+        let q1 = "question"+id;
+        this.setState(()  => ({
+            [q1] : {
+                ...this.state["question"+id],
+                answerText3: val
+
             }
-        }));
-        console.log(this.state.question.answer3.text);
+        }),function(){
+            console.log(this.state)
+        })
     }
     setq4Value(e)
     {
+        let id = e.target.dataset.id;
         let val = e.target.value;
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                answer4 :{
-                    ...prevState.question.answer4,
-                    text: val
-                }
+        let q1 = "question"+id;
+        this.setState(()  => ({
+            [q1] : {
+                ...this.state["question"+id],
+                answerText4: val
+
             }
-        }));
-        console.log(this.state.question.answer4.text);
+        }),function(){
+            console.log(this.state)
+        })
     }
     setq1Correction(e)
     {
-        this.setAllqFalse();
 
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                answer1 :{
-                    ...prevState.question.answer1,
-                    correct: true
-                }
+        let id = e.target.dataset.id;
+        let q1 = "question"+id;
+
+        this.setState(()  => ({
+            [q1] : {
+                ...this.state["question"+id],
+                answerCorrect1:true,
+                answerCorrect2: false,
+                answerCorrect3: false,
+                answerCorrect4: false,
+
             }
-        }));
+        }),function(){
+            console.log(this.state)
+        })
+
 
     }
     setq2Correction(e)
     {
-        this.setAllqFalse();
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                answer2 :{
-                    ...prevState.question.answer2,
-                    correct: true
-                }
+
+        let id = e.target.dataset.id;
+        let q1 = "question"+id;
+
+
+        this.setState(()  => ({
+            [q1] : {
+                ...this.state["question"+id],
+                answerCorrect1:false,
+                answerCorrect2: true,
+                answerCorrect3: false,
+                answerCorrect4: false,
+
             }
-        }));
+        }),function(){
+            console.log(this.state)
+        })
+
 
     }
     setq3Correction(e)
     {
-        this.setAllqFalse();
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                answer3 :{
-                    ...prevState.question.answer3,
-                    correct: true
-                }
+
+        let id = e.target.dataset.id;
+        let q1 = "question"+id;
+
+
+        this.setState(()  => ({
+            [q1] : {
+                ...this.state["question"+id],
+                answerCorrect1:false,
+                answerCorrect2: false,
+                answerCorrect3: true,
+                answerCorrect4: false,
+
             }
-        }));
+        }),function(){
+            console.log(this.state)
+        })
+
 
     }
     setq4Correction(e)
     {
-        this.setAllqFalse();
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                answer4 :{
-                    ...prevState.question.answer4,
-                    correct: true
-                }
+
+        let id = e.target.dataset.id;
+        let q1 = "question"+id;
+
+
+        this.setState(()  => ({
+            [q1] : {
+                ...this.state["question"+id],
+                answerCorrect1:false,
+                answerCorrect2: false,
+                answerCorrect3: false,
+                answerCorrect4: true,
+
             }
-        }));
+        }),function(){
+            console.log(this.state)
+        })
+
 
     }
 
-    setAllqFalse(){
-        this.setState((prevState) =>({
-            question : {
-                ...prevState.question,
-                answer1 :{
-                    ...prevState.question.answer1,
-                    correct: false
-                },
-                answer2 :{
-                    ...prevState.question.answer2,
-                    correct: false
-                },
-                answer3 :{
-                    ...prevState.question.answer3,
-                    correct: false
-                },
-                answer4 :{
-                    ...prevState.question.answer4,
-                    correct: false
-                }
-            }
-        }));
-    }
 
     addQuestion(e)
     {
         e.preventDefault();
-        console.log(this.state.question);
-        this.state.questions.push(this.state.question);
+        this.setState({
+            nbrQuestion : +1
+        })
+        let qid = "question"+ this.state.nbrQuestion;
+        this.setState({
+
+        [qid]: {
+                name:undefined,
+                answerCorrect1: false,
+                answerCorrect2: false,
+                answerCorrect3: false,
+                answerCorrect4: false,
+                answerText1:'undefined',
+                answerText2:'undefined',
+                answerText3:'undefined',
+                answerText4:'undefined',
+        }});
+    this.renderQuestion(qid);
+
+    }
+    renderQuestion(question){
+        return(
+            <AddQuestion
+                questions={[]}
+                setQuestionName={this.setQuestionName}
+                setq1Value={this.setq1Value}
+                setq2Value={this.setq2Value}
+                setq3Value={this.setq3Value}
+                setq4Value={this.setq4Value}
+                setq1Correction={this.setq1Correction}
+                setq2Correction={this.setq2Correction}
+                setq3Correction={this.setq3Correction}
+                setq4Correction={this.setq4Correction}
+
+            />
+            )
+
     }
 
 
@@ -215,115 +291,57 @@ class AddQuiz extends React.Component
     render()
     {
 
+
         return(
 
-                <div className="addQuiz ">
+            <div className="addQuiz ">
 
-                        <form className="addQuiz__form__haut" onSubmit= {e=>{this.routeChange(e)}}>
-                            <div className="form-group">
-                                <label className="addQuiz__label__quizzName" htmlFor="qName">Nom du quiz:</label>
-                                <input className="addQuiz__input__quizzName form-control" type='text' name='qName' id="qName" onChange={e=>this.updateInputValue(e)}/>
-                            </div>
+                <form id="quizzform" className="addQuiz__form__haut" onSubmit= {e=>{this.routeChange(e)}}>
 
-                            <div className="input-group mb-3">
-                                <div className="input-group-prepend">
-                                    <label className="addQuiz__title__categorie input-group-text" htmlFor="qName">Catégorie:</label>
-                                </div>
-                                <select className="custom-select" id="qName" value={this.state.value} onChange={e=>this.handleChange(e)}>
-                                    <option defaultValue value="grapefruit">Grapefruit</option>
-                                    <option value="lime">Lime</option>
-                                    <option value="coconut">Coconut</option>
-                                    <option value="mango">Mango</option>
-                                </select>
-                            </div>
+                    <div className="form-group">
+                        <label className="addQuiz__label__quizzName" htmlFor="qName">Nom du quiz:</label>
+                        <input className="addQuiz__input__quizzName form-control" type='text' name='qName' id="qName" onChange={e=>this.setQuizzName(e)}/>
+                    </div>
 
-                           {/*
-                           Question:<br/>
-                            showing all questions
-                            {this.state.accounts.map(a => <div key={a}>{a}</div>)}
-                            */}
-                            <input type='submit' value='add quiz'/>
-                        </form>
+                    <div className="form-group">
+                        <label className="addQuiz__title__categorie" htmlFor="qName">Catégorie:</label>
+                        <Select  id="qName" value={this.state.value} options = {this.state.categories} onChange={e=>this.handleChange(e)}/>
+                    </div>
+
+                </form>
 
 
+                <div className="row">
 
+                    <div className="col-md-12">
+                        Liste des questions minimum (3) :
+                        <AddQuestion
+                            questions={[this.state.question1,this.state.question2,this.state.question3]}
+                            setQuestionName={this.setQuestionName}
+                            setq1Value={this.setq1Value}
+                            setq2Value={this.setq2Value}
+                            setq3Value={this.setq3Value}
+                            setq4Value={this.setq4Value}
+                            setq1Correction={this.setq1Correction}
+                            setq2Correction={this.setq2Correction}
+                            setq3Correction={this.setq3Correction}
+                            setq4Correction={this.setq4Correction}
 
-                        <form className="addQuiz__form__bas" onSubmit={e=>this.addQuestion(e)}>
-                            <div className="form-group">
-                                <label className="addQuiz__label__quizzQuestion" htmlFor="qQuestion">Question :</label>
-                                <input className="addQuiz__input__quizzQuestion form-control" type='text' name='qQuestion' id="qQuestion" onChange={e=>this.setNameValue(e)}/>
-                            </div>
+                        />
+                        {this.renderQuestion()}
 
+                        <input type='submit' className="btn btn-primary" value='Ajoutez une question'   onClick={e=>this.addQuestion(e)}/>
+                    </div>
 
-                            <label className="addQuiz__label__quizzQuestion">Réponses :</label>
-
-                            <div className="row">
-
-                                <div className="col">
-
-                                    <div className="input-group">
-
-                                        <div className="input-group-prepend">
-                                            <label htmlFor="qAnswer1">
-                                                <div className="input-group-text">
-                                                    <i className="fa fa-check"> </i>
-                                                    <input type="radio" id="qAnswer1" name="qAnswer" aria-label="Radio button for following text input" onChange={e=>this.setq1Correction(e)} />
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <input type="text" className="form-control" aria-label="Text input with radio button"  onChange={e=>this.setq1Value(e)}/>
-                                    </div>
-
-                                    <div className="input-group">
-                                        <div className="input-group-prepend">
-                                            <label htmlFor="qAnswer2">
-                                                <div className="input-group-text">
-                                                    <i className="fa fa-check"> </i>
-                                                    <input type="radio" id="qAnswer2" name="qAnswer" aria-label="Radio button for following text input" onChange={e=>this.setq2Correction(e)} />
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <input type="text" className="form-control" aria-label="Text input with radio button"  onChange={e=>this.setq2Value(e)}/>
-                                    </div>
-
-                                </div>
-
-                                <div className="col">
-
-                                    <div className="input-group">
-                                        <div className="input-group-prepend">
-                                            <label htmlFor="qAnswer3">
-                                                <div className="input-group-text">
-                                                    <i className="fa fa-check"> </i>
-                                                    <input type="radio" id="qAnswer3" name="qAnswer" aria-label="Radio button for following text input" onChange={e=>this.setq3Correction(e)} />
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <input type="text" className="form-control" aria-label="Text input with radio button"  onChange={e=>this.setq3Value(e)}/>
-                                    </div>
-
-                                    <div className="input-group">
-                                        <div className="input-group-prepend">
-                                            <label htmlFor="qAnswer4">
-                                                <div className="input-group-text">
-                                                    <i className="fa fa-check"> </i>
-                                                    <input type="radio" id="qAnswer4" name="qAnswer" aria-label="Radio button for following text input" onChange={e=>this.setq4Correction(e)}/>
-                                                </div>
-                                            </label>
-                                        </div>
-                                        <input type="text" className="form-control" aria-label="Text input with radio button"  onChange={e=>this.setq4Value(e)}/>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <input type='submit' value='Valider la question' />
-                        </form>
+                    <input type='submit' form="quizzform" className="btn btn-primary" value='Ajoutez le quiz'/>
 
                 </div>
+            </div>
+
 
         )
     }
 }
 
 export default AddQuiz;
+

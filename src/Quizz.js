@@ -25,7 +25,7 @@ class Question extends Component{
 
                 })}
                 {this.props.q.imgAnswers.map( (x,i) =>{
-                        return <li key={i}> <input key={i} type='checkbox' id={x} name={x}/>  <label  htmlFor={x}>question</label><img src={HTTP_SERVER_PORT_PICTURES + x} alt="represente le quizz"/></li>
+                        return <li key={i}> <input key={i} type='checkbox' id={x} name={x}/>  <label  htmlFor={x}>question</label><img src={HTTP_SERVER_PORT_PICTURES + x} alt="reponse au quizz"/></li>
 
                 })}
                 </ul>
